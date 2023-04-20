@@ -6,15 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from './Home';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
+import TopNavbar from './Navbar';
+import { useIsLoggedIn } from './useIsLoggedIn';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    console.log(localStorage.getItem('isLoggedIn'));
-    
-    setIsLoggedIn(Boolean(localStorage.getItem('isLoggedIn')))
-  }, []);
+  let [isLoggedIn, setIsLoggedIn] = useIsLoggedIn();
 
   // console.log(`isLoggedIn:${isLoggedIn}`);
   if(isLoggedIn === null){
@@ -23,19 +19,13 @@ function App() {
 
   return (
     <BrowserRouter>
+      <TopNavbar  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Routes>
-        <Route index element={ 
-        <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Home setIsLoggedIn={setIsLoggedIn} />
-            </ProtectedRoute>} />
-        <Route path="login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route index element={<Home isLoggedIn={isLoggedIn} />} />
+        <Route path="login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route
           path="home"
-          element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Home setIsLoggedIn={setIsLoggedIn} />
-            </ProtectedRoute>
-          }
+          element={<Home isLoggedIn={isLoggedIn}  />}
         />
       </Routes>
     </BrowserRouter>

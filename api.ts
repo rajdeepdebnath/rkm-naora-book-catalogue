@@ -34,5 +34,6 @@ export const signIn = async ({email,password}:SignIn) => {
 export const logOut = async () => {
   const auth = getAuth();
   await signOut(auth);
+  localStorage.removeItem('isLoggedIn');
   return;
 }

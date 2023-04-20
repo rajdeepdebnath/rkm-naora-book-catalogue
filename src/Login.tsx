@@ -6,8 +6,9 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../api';
+import { useIsLoggedIn } from './useIsLoggedIn';
 
-const Login = ({setIsLoggedIn}) => {
+const Login = ({isLoggedIn, setIsLoggedIn}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -19,6 +20,10 @@ const Login = ({setIsLoggedIn}) => {
         // localStorage.setItem('token', u.stsTokenManager.accessToken);
         localStorage.setItem('isLoggedIn', Boolean(u).toString());
         setIsLoggedIn(Boolean(u))
+        navigate('/');
+    }
+
+    if(isLoggedIn) {
         navigate('/');
     }
 
