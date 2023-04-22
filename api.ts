@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, or, query, setDoc, where } from "firebase/firestore";
+import { QueryFieldFilterConstraint, addDoc, collection, deleteDoc, doc, getDocs, limit, or, query, setDoc, where } from "firebase/firestore";
 import { database } from './firebase';
 import { Book } from "./src/types/book";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
@@ -27,8 +27,21 @@ export const getAllBooks = async () => {
 };
 
 export const searchBooks = async (searchText:string) => {
-  const q = query(bookCatalogRef, or(where("Name", "==", searchText),
-  where("Author", "==", searchText)));
+
+  const searchConstraints: Array<QueryFieldFilterConstraint> = [];
+  
+  Object.keys(triGram(searchText)).forEach(key => searchConstraints.push(where(`${key}`, '==', true)));
+
+
+  let constraints = [
+    // where('Name', '==', searchText),
+    // where('Author', '==', searchText),
+    ...searchConstraints,
+    limit(10)
+  ];
+  
+  const q = query(bookCatalogRef, ...constraints);
+  
   
   let snapshot = await getDocs(q);
   
@@ -49,7 +62,8 @@ export const searchBooks = async (searchText:string) => {
 
 export const addBook = async (data:Book) => {
   try {
-    let docRef = await addDoc(bookCatalogRef, data);
+    let docRef = await addDoc(bookCatalogRef, 
+      {...data, ...triGram([data.Name || '', data.Author || ''].join(' ').slice(0, 500))});
     return Boolean(docRef);
   }catch (error) {
     console.log(error);
@@ -98,3 +112,16 @@ export const logOut = async () => {
   localStorage.removeItem('isLoggedIn');
   return;
 }
+
+
+// interface TriGramProps {
+
+// }
+const triGram = (txt:string) => {
+  const map = {};
+  const s1 = (txt || '').toLowerCase();
+  const n = 3;
+  for (let k = 0; k <= s1.length - n; k++) map[s1.substring(k, k + n)] = true;
+  
+  return map;
+};
