@@ -7,13 +7,14 @@ import BookListItem from './BookListItem'
 
 interface Props{
   setNewBookAdded: React.Dispatch<React.SetStateAction<boolean>>;
-    books:Book[]
+    books:Book[],
+    isLoggedIn:boolean
 }
 
-const BookList = ({setNewBookAdded,books}:Props) => {
+const BookList = ({isLoggedIn,setNewBookAdded,books}:Props) => {
   return (
-    <Container className='shadow border'>
-      {books.map((book, idx) => <BookListItem setNewBookAdded={setNewBookAdded} book={book} idx={idx} />)}
+    <Container className='py-2 shadow border'>
+      {books.map((book, idx) => <BookListItem isLoggedIn={isLoggedIn} setNewBookAdded={setNewBookAdded} book={book} idx={idx} />)}
     </Container>
   )
 }

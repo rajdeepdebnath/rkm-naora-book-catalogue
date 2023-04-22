@@ -7,6 +7,7 @@ import { addBook, updateBook } from '../api';
 import { useState } from 'react';
 import { Book } from './types/book';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import { Alert } from 'react-bootstrap';
 
 interface Props {
     setNewBookAdded: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,43 +23,47 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
     
     const handleAddEditBook = async (e:React.SyntheticEvent) => {
         e.preventDefault();
-        setLoading(true);
-        let actionIsSuccess:boolean|null = null;
-        if(bookToUpdate === null){
-            let book:Book = {Name:name, Author:author, created_date:new Date(Date.now())};
-            actionIsSuccess = await addBook(book);
-        }else{
-            let book:Book = {id: bookToUpdate.id,Name:name, Author:author, created_date:new Date(Date.now())};
-            actionIsSuccess = await updateBook(book);
-        }
-        setLoading(false);
-        console.log(actionIsSuccess, Boolean(actionIsSuccess));
-        
-        if(Boolean(actionIsSuccess)){
-            setSuccess(true);
-            setNewBookAdded(true);
-            setName('');
-            setAuthor('');
-        }else{
-            setError(true);
-        }
 
-        setTimeout(() => {
-            setSuccess(false);
-            setError(false);
-        }, 2000);
+        if(name.trim().length > 0 && author.trim().length > 0) {
+            setLoading(true);
+            let actionIsSuccess:boolean|null = null;
+            if(bookToUpdate === null){
+                let book:Book = {Name:name, Author:author, created_date:new Date(Date.now())};
+                actionIsSuccess = await addBook(book);
+            }else{
+                let book:Book = {id: bookToUpdate.id,Name:name, Author:author, created_date:new Date(Date.now())};
+                actionIsSuccess = await updateBook(book);
+            }
+            setLoading(false);
+            
+            if(Boolean(actionIsSuccess)){
+                setSuccess(true);
+                setNewBookAdded(true);
+                setName('');
+                setAuthor('');
+            }else{
+                setError(true);
+            }
+    
+            setTimeout(() => {
+                setSuccess(false);
+                setError(false);
+            }, 2000);
+        }else{
+            alert("Please enter Name and Author.");
+        }
     }
 
   return (
-    <Container className='my-3 mx-2 p-2 shadow border'>
+    <Container className='my-3 p-2 shadow border'>
       <Form onSubmit={handleAddEditBook}>
         <Row>
             <Col sm={5} xs={11}>
-                <Form.Control placeholder="Book name" maxLength={30} 
+                <Form.Control placeholder="Book name" maxLength={30} minLength={1}
                 value={name} onChange={e => setName(e.target.value)} />
             </Col>
             <Col sm={5} xs={11}>
-                <Form.Control placeholder="Author"  maxLength={30} 
+                <Form.Control placeholder="Author"  maxLength={30}  minLength={1}
                 value={author} onChange={e => setAuthor(e.target.value)} />
             </Col>
             <Col sm={2} xs={5}>
@@ -70,12 +75,12 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
       </Form>
         {success && <Row className='mt-3'>
             <Col xs={3}>
-                <p className='bg-light text-success p-1'>Book {`${bookToUpdate !== null ? 'updated' : 'added'}`}</p>
+                <Alert variant='success'>Book {`${bookToUpdate !== null ? 'updated' : 'added'}`}</Alert>
             </Col>
         </Row>}
         {error && <Row>
             <Col>
-                <p className='text-danger'>Error!</p>
+                <Alert variant='danger'>Error!</Alert>
             </Col>
         </Row>}
     </Container>

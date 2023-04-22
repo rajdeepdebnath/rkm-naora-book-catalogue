@@ -8,6 +8,7 @@ import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import TopNavbar from './Navbar';
 import { useIsLoggedIn } from './useIsLoggedIn';
+import './App.css'
 
 function App() {
   let [isLoggedIn, setIsLoggedIn] = useIsLoggedIn();

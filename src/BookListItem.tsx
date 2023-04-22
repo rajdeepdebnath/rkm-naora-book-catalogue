@@ -4,20 +4,38 @@ import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import AddEditBook from './AddEditBook'
+import Spinner from 'react-bootstrap/esm/Spinner'
+import { deleteBook } from '../api'
 
 interface Props{
     setNewBookAdded: React.Dispatch<React.SetStateAction<boolean>>;
     book:Book,
-    idx:number
+    idx:number,
+    isLoggedIn:boolean
 }
 
-const BookListItem = ({setNewBookAdded,book, idx}:Props) => {
+const BookListItem = ({isLoggedIn,setNewBookAdded,book, idx}:Props) => {
     const [editing, setEditing] = useState(false);
+    const [deleting, setDeleteing] = useState(false);
     const [name, setName] = useState('');
     const [author, setAuthor] = useState('');
 
-    const handleEdit = () => {
+    const handleEdit = (e:React.SyntheticEvent) => {
+        e.preventDefault();
         setEditing(true);
+    }
+
+    const handleDelete = async (e:React.SyntheticEvent) => {
+        e.preventDefault();
+        if(confirm("Are you sure you want to delete?")){
+            setDeleteing(true);
+            let response = await deleteBook(book.id!);
+            setDeleteing(false);
+            if(response){
+                setNewBookAdded(true);
+            }
+        }
+
     }
 
     const handleEditingComplete = () => {
@@ -38,9 +56,15 @@ const BookListItem = ({setNewBookAdded,book, idx}:Props) => {
                 <Col sm={5} className='text-break border'>
                     {book.Author}
                 </Col>
-                <Col sm={1} className='border'>
-                    <a className='text-primary' onClick={handleEdit}>Edit</a>
-                </Col>
+                {isLoggedIn && !deleting && <Col sm={1} className='border text-wrap'>
+                    <a className='text-primary custom-fs-14 text-decoration-none' 
+                    onClick={handleEdit}>Edit</a>&nbsp;|&nbsp;
+                    <a className='text-primary custom-fs-14 text-decoration-none' 
+                    onClick={handleDelete}>Delete</a>
+                </Col>}
+                {isLoggedIn && deleting && <Col sm={1} className='border'>
+                    <Spinner animation="border" size="sm" />
+                </Col>}
             </Row>
       )}
       {book && editing && <AddEditBook setNewBookAdded={handleEditingComplete} bookToUpdate={book} />}
