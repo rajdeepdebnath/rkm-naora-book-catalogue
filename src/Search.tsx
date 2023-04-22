@@ -39,10 +39,10 @@ const Search = ({handleSearchedBooks}:Props) => {
     }
     
   return (
-    <Container className='my-3 p-2 pb-4 bg-light'>
+    <Container fluid className='my-3 p-2 pb-4 bg-light'>
        <Form onSubmit={handleSearch}>
         <Row>
-            <Col sm={10} xs={12}>
+            <Col lg={10} md={8} sm={8} xs={12}>
                 <Form.Control placeholder="Book or Author (at least 3 characters)" 
                 maxLength={10} minLength={3}
                 value={searchText} onChange={e => setSearchText(e.target.value)} />
@@ -50,7 +50,7 @@ const Search = ({handleSearchedBooks}:Props) => {
                     <em>Maximum 10 characters</em>
                 </Form.Text>
             </Col>
-            <Col sm={2} xs={5}>
+            <Col lg={2} md={4} sm={4} xs={12}>
                 <Button variant="primary" type="submit" className='btn-sm'>
                     {loading ? <Spinner animation="border" size="sm" /> : 'Search'}
                 </Button>&nbsp;

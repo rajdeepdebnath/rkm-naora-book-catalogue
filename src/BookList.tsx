@@ -27,22 +27,23 @@ const BookList = ({isLoggedIn, fetchedBookCount, handleLoadMore,setNewBookAdded,
   }
 
   return (
-    <Container className='py-2'>
+    <Container fluid className='py-2'>
     <Row>
-        <Col sm={1} className='border fw-bold bg-light text-center'>
-            Sl no
+        <Col xs={1} className='border fw-bold bg-light text-center'>
+            No.
         </Col>
-        <Col sm={5} className='border fw-bold bg-light text-center'>
+        <Col md={5} xs={6} className='border fw-bold bg-light text-center'>
             Book Name
         </Col>
-        <Col sm={5} className='border fw-bold bg-light text-center'>
+        <Col xl={5} md={4} xs={5} className='border fw-bold bg-light text-center'>
             Author
         </Col>
-        {isLoggedIn && <Col sm={1} className='border fw-bold bg-light text-center'>
+        {isLoggedIn && <Col xl={1} md={2}
+        className='border fw-bold bg-light text-center d-none d-md-block'>
             Action
         </Col>}
     </Row>
-      {books.map((book, idx) => <BookListItem isLoggedIn={isLoggedIn} setNewBookAdded={setNewBookAdded} book={book} idx={idx} />)}
+      {books.map((book, idx) => <BookListItem key={idx} isLoggedIn={isLoggedIn} setNewBookAdded={setNewBookAdded} book={book} idx={idx} />)}
       <Row>
         <Col sm={12} className='text-center my-3'>
           <Button variant="primary" type="button" className='btn-sm' onClick={handleLoadMoreEvent}

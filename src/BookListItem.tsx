@@ -47,16 +47,16 @@ const BookListItem = ({isLoggedIn,setNewBookAdded,book, idx}:Props) => {
     <>
       {book && !editing && (
             <Row key={book.id}>
-                <Col sm={1} className='border text-center'>
+                <Col md={1} xs={1} className='border text-center'>
                     {idx + 1}
                 </Col>
-                <Col sm={5} className='text-break border'>
+                <Col md={5} xs={6} className='text-break border'>
                     {book.Name}
                 </Col>
-                <Col sm={5} className='text-break border'>
+                <Col xl={5} md={4} xs={5} className='text-break border'>
                     {book.Author}
                 </Col>
-                {isLoggedIn && !deleting && <Col sm={1} className='border text-wrap'>
+                {isLoggedIn && !deleting && <Col xl={1} md={2} className='border text-wrap d-none d-md-block'>
                     <a className='text-primary custom-fs-14 text-decoration-none' 
                     onClick={handleEdit} role="button">Edit</a>&nbsp;|&nbsp;
                     <a className='text-primary custom-fs-14 text-decoration-none' 

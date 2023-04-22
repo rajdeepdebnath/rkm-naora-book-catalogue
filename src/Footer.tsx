@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/esm/Row'
 
 const Footer = () => {
   return (
-    <Container fluid className='bg-dark py-2'>
+    <Container fluid className='bg-dark py-2 position-fixed bottom-0'>
       <Row>
         <Col xs={12} className='text-center custom-fs-12 text-light'>
             Copyright reserved 2023 @ RKM Naora

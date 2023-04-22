@@ -46,7 +46,7 @@ function Home({isLoggedIn}) {
 
 
   return (
-    <Container>
+    <Container fluid>
       <Search handleSearchedBooks={handleSearchedBooks}/>
       {isLoggedIn && <AddEditBook setNewBookAdded={setNewBookAdded} />}
       {books && <BookList fetchedBookCount={fetchedBookCount} handleLoadMore={handleLoadMore} isLoggedIn={isLoggedIn} setNewBookAdded={setNewBookAdded} books={books} />}
