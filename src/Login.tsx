@@ -7,20 +7,30 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../api';
 import { useIsLoggedIn } from './useIsLoggedIn';
+import { Spinner } from 'react-bootstrap';
 
 const Login = ({isLoggedIn, setIsLoggedIn}) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleLogin = async (e: React.SyntheticEvent) => {
+        setLoading(true);
+        setError(null);
         e.preventDefault(); 
         let u = await signIn({email, password});
-        console.log(JSON.stringify(u, null, 2));
+        //console.log(JSON.stringify(u, null, 2));
         // localStorage.setItem('token', u.stsTokenManager.accessToken);
-        localStorage.setItem('isLoggedIn', Boolean(u).toString());
-        setIsLoggedIn(Boolean(u))
-        navigate('/');
+        if(u){
+            setIsLoggedIn(Boolean(u))
+            navigate('/');
+        }
+        else{
+            setError('Username or password error!');
+        }
+        setLoading(false);
     }
 
     if(isLoggedIn) {
@@ -39,6 +49,7 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
             <Col>
                 <Form onSubmit={handleLogin} className='shadow p-3 border rounded'>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
+                        {error && <div className='text-danger'>{error}</div>}
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" 
                         value={email} onChange={e => setEmail(e.target.value)}/>
@@ -50,7 +61,7 @@ const Login = ({isLoggedIn, setIsLoggedIn}) => {
                         value={password} onChange={e => setPassword(e.target.value)}/>
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Log in
+                        {loading ? <Spinner animation="border" size="sm" /> : 'Log in'}
                     </Button>
                 </Form>
             </Col>

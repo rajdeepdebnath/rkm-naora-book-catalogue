@@ -8,17 +8,22 @@ import { useLocation } from 'react-router-dom';
 import {useIsLoggedIn} from './useIsLoggedIn';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../api';
+import { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 
 const TopNavbar = ({isLoggedIn, setIsLoggedIn}) => {
   let location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   console.log(isLoggedIn);
   
 
   const handleLogout = async (e) => {
+    setLoading(true);
     e.preventDefault();
     await logOut();
     setIsLoggedIn(false);
+    setLoading(false);
     navigate('/');
 }
 
@@ -35,7 +40,9 @@ const TopNavbar = ({isLoggedIn, setIsLoggedIn}) => {
               && <Link to='/login' className='btn btn-primary btn-sm'>Log in</Link>}
               {isLoggedIn
               && 
-              <Button variant="primary" onClick={handleLogout} className='btn-sm'>Log out</Button>}
+              <Button variant="primary" onClick={handleLogout} className='btn-sm'>
+                 {loading ? <Spinner animation="border" size="sm" /> : 'Log out'}  
+              </Button>}
               {location.pathname === "/login" 
               && <Link to='/' className='btn btn-secondary btn-sm'>Home</Link>}
             </Col>

@@ -1,10 +1,12 @@
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { database } from './firebase';
 import { Book } from "./src/types/book";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { SignIn } from "./src/types/signIn";
 
-const bookCatalogRef = collection(database, "book-catalog");
+const collectionName = import.meta.env.VITE_APP_ENV === "prod" 
+? "book-catalog" :  "book-catalog_test";
+const bookCatalogRef = collection(database, collectionName);
 
 export const getAllBooks = async () => {
   let snapshot = await getDocs(bookCatalogRef);
@@ -15,7 +17,8 @@ export const getAllBooks = async () => {
     let b:Book = {
       id: book.id, 
       Name: bookData.Name,
-      Author: bookData.Author
+      Author: bookData.Author,
+      created_date:bookData.created_date
     };
     allBooks.push(b);
   });
@@ -23,12 +26,39 @@ export const getAllBooks = async () => {
   return allBooks;
 };
 
+export const addBook = async (data:Book) => {
+  try {
+    let docRef = await addDoc(bookCatalogRef, data);
+    return Boolean(docRef);
+  }catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export const updateBook = async (data:Book) => {
+  try {
+    const frankDocRef = doc(bookCatalogRef, data.id);
+    await setDoc(frankDocRef, data);
+    return true;
+  }catch (error) {
+    console.log(error);
+    
+    return null;
+  }
+}
+
 
 export const signIn = async ({email,password}:SignIn) => {
-  const auth = getAuth();
-  let credential = await signInWithEmailAndPassword(auth, email, password);
-
-  return credential.user;
+  try {
+    const auth = getAuth();
+    let credential = await signInWithEmailAndPassword(auth, email, password);
+    localStorage.setItem('isLoggedIn', Boolean(credential.user).toString());
+  
+    return credential.user;
+  } catch (error) {
+    return null;
+  }
 };
 
 export const logOut = async () => {
