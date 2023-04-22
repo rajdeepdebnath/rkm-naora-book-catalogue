@@ -9,6 +9,7 @@ import ProtectedRoute from './ProtectedRoute';
 import TopNavbar from './Navbar';
 import { useIsLoggedIn } from './useIsLoggedIn';
 import './App.css'
+import Footer from './Footer';
 
 function App() {
   let [isLoggedIn, setIsLoggedIn] = useIsLoggedIn();
@@ -29,6 +30,7 @@ function App() {
           element={<Home isLoggedIn={isLoggedIn}  />}
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

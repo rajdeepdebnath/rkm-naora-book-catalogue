@@ -28,7 +28,7 @@ export const getAllBooks = async (lastName:string|null = null) => {
       id: book.id, 
       Name: bookData.Name,
       Author: bookData.Author,
-      created_date:bookData.created_date
+      created_date:bookData.created_date.toDate()
     };
     allBooks.push(b);
   });
@@ -70,7 +70,7 @@ export const searchBooks = async (searchText:string, lastName:string|null = null
       id: book.id, 
       Name: bookData.Name,
       Author: bookData.Author,
-      created_date:bookData.created_date
+      created_date:bookData.created_date.toDate()
     };
     allBooks.push(b);
   });

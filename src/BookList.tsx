@@ -27,7 +27,7 @@ const BookList = ({isLoggedIn, fetchedBookCount, handleLoadMore,setNewBookAdded,
   }
 
   return (
-    <Container className='py-2 shadow border'>
+    <Container className='py-2'>
     <Row>
         <Col sm={1} className='border fw-bold bg-light text-center'>
             Sl no
@@ -51,6 +51,7 @@ const BookList = ({isLoggedIn, fetchedBookCount, handleLoadMore,setNewBookAdded,
           </Button>
         </Col>
       </Row>
+      <hr className="hr hr-blurry" />
     </Container>
   )
 }

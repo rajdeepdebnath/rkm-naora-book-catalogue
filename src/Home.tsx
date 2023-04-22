@@ -7,6 +7,7 @@ import AddEditBook from './AddEditBook';
 import BookList from './BookList';
 import Container from 'react-bootstrap/esm/Container';
 import Search from './Search';
+import ExportExcel from './ExportExcel';
 
 function Home({isLoggedIn}) {
   const [books, setBooks] = useState<Book[]>([])
@@ -49,6 +50,7 @@ function Home({isLoggedIn}) {
       <Search handleSearchedBooks={handleSearchedBooks}/>
       {isLoggedIn && <AddEditBook setNewBookAdded={setNewBookAdded} />}
       {books && <BookList fetchedBookCount={fetchedBookCount} handleLoadMore={handleLoadMore} isLoggedIn={isLoggedIn} setNewBookAdded={setNewBookAdded} books={books} />}
+      <ExportExcel books={books}/>
     </Container>
   )
 }

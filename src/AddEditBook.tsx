@@ -59,7 +59,7 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
     }
 
   return (
-    <Container className='my-3 p-2 shadow border'>
+    <Container className='my-3 p-2 pb-4'>
       <Form onSubmit={handleAddEditBook}>
         <Row>
             <Col sm={5} xs={11}>

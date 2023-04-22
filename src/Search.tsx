@@ -39,7 +39,7 @@ const Search = ({handleSearchedBooks}:Props) => {
     }
     
   return (
-    <Container className='my-3 p-2 shadow border'>
+    <Container className='my-3 p-2 pb-4 bg-light'>
        <Form onSubmit={handleSearch}>
         <Row>
             <Col sm={10} xs={12}>
