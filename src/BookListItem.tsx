@@ -47,7 +47,7 @@ const BookListItem = ({isLoggedIn,setNewBookAdded,book, idx}:Props) => {
     <>
       {book && !editing && (
             <Row key={book.id}>
-                <Col sm={1} className='border'>
+                <Col sm={1} className='border text-center'>
                     {idx + 1}
                 </Col>
                 <Col sm={5} className='text-break border'>
@@ -58,9 +58,9 @@ const BookListItem = ({isLoggedIn,setNewBookAdded,book, idx}:Props) => {
                 </Col>
                 {isLoggedIn && !deleting && <Col sm={1} className='border text-wrap'>
                     <a className='text-primary custom-fs-14 text-decoration-none' 
-                    onClick={handleEdit}>Edit</a>&nbsp;|&nbsp;
+                    onClick={handleEdit} role="button">Edit</a>&nbsp;|&nbsp;
                     <a className='text-primary custom-fs-14 text-decoration-none' 
-                    onClick={handleDelete}>Delete</a>
+                    onClick={handleDelete} role="button">Delete</a>
                 </Col>}
                 {isLoggedIn && deleting && <Col sm={1} className='border'>
                     <Spinner variant='primary' animation="border" size="sm" />

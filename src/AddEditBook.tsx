@@ -54,6 +54,10 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
         }
     }
 
+    const handleCancel = () => {
+        setNewBookAdded(true);
+    }
+
   return (
     <Container className='my-3 p-2 shadow border'>
       <Form onSubmit={handleAddEditBook}>
@@ -61,15 +65,25 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
             <Col sm={5} xs={11}>
                 <Form.Control placeholder="Book name" maxLength={30} minLength={1}
                 value={name} onChange={e => setName(e.target.value)} />
+                <Form.Text className="text-muted custom-fs-12">
+                    <em>Maximum 30 characters</em>
+                </Form.Text>
             </Col>
             <Col sm={5} xs={11}>
                 <Form.Control placeholder="Author"  maxLength={30}  minLength={1}
                 value={author} onChange={e => setAuthor(e.target.value)} />
+                <Form.Text className="text-muted custom-fs-12">
+                    <em>Maximum 30 characters</em>
+                </Form.Text>
             </Col>
             <Col sm={2} xs={5}>
                 <Button variant="primary" type="submit" className='btn-sm'>
                     {loading ? <Spinner animation="border" size="sm" /> : `${bookToUpdate !== null ? 'Edit' : 'Add'} Book`}
-                </Button>
+                </Button>&nbsp;
+                {bookToUpdate && 
+                <Button variant="outline-secondary" type="button" className='btn-sm' onClick={handleCancel}>
+                    Cancel
+                </Button>}
             </Col>
         </Row>
       </Form>

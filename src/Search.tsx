@@ -9,7 +9,7 @@ import { getAllBooks, searchBooks } from "../api";
 import { Book } from "./types/book";
 
 interface Props{
-    handleSearchedBooks:(searchedBooks: Book[]) => void
+    handleSearchedBooks:(searchText: string, searchedBooks: Book[]) => void
 }
 
 const Search = ({handleSearchedBooks}:Props) => {
@@ -22,7 +22,7 @@ const Search = ({handleSearchedBooks}:Props) => {
         if(searchText.trim().length > 2){
             setLoading(true);
             let books = await searchBooks(searchText);
-            handleSearchedBooks(books);
+            handleSearchedBooks(searchText, books);
             setLoading(false);
         }else{
             alert("Please enter at least 3 characters");
@@ -34,7 +34,7 @@ const Search = ({handleSearchedBooks}:Props) => {
         setClearLoading(true);
         setSearchText('');
         let books = await getAllBooks();
-        handleSearchedBooks(books);
+        handleSearchedBooks('', books);
         setClearLoading(false);
     }
     
@@ -43,8 +43,12 @@ const Search = ({handleSearchedBooks}:Props) => {
        <Form onSubmit={handleSearch}>
         <Row>
             <Col sm={10} xs={12}>
-                <Form.Control placeholder="Book or Author (at least 3 characters)" maxLength={30} minLength={3}
+                <Form.Control placeholder="Book or Author (at least 3 characters)" 
+                maxLength={10} minLength={3}
                 value={searchText} onChange={e => setSearchText(e.target.value)} />
+                <Form.Text className="text-muted custom-fs-12">
+                    <em>Maximum 10 characters</em>
+                </Form.Text>
             </Col>
             <Col sm={2} xs={5}>
                 <Button variant="primary" type="submit" className='btn-sm'>

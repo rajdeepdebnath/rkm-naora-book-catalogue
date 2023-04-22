@@ -1,15 +1,25 @@
-import { QueryFieldFilterConstraint, addDoc, collection, deleteDoc, doc, getDocs, limit, or, query, setDoc, where } from "firebase/firestore";
+import { DocumentData, Query, QueryFieldFilterConstraint, QueryStartAtConstraint, addDoc, collection, deleteDoc, doc, getDocs, limit, or, orderBy, query, setDoc, startAfter, where } from "firebase/firestore";
 import { database } from './firebase';
 import { Book } from "./src/types/book";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { SignIn } from "./src/types/signIn";
+import { DEFAULT_PAGE_LIMIT, DEFAULT_SEARCH_PAGE_LIMIT } from "./src/constants";
 
 const collectionName = import.meta.env.VITE_APP_ENV === "prod" 
 ? "book-catalog" :  "book-catalog_test";
 const bookCatalogRef = collection(database, collectionName);
 
-export const getAllBooks = async () => {
-  let snapshot = await getDocs(bookCatalogRef);
+export const getAllBooks = async (lastName:string|null = null) => {
+
+  const pageLimit = DEFAULT_PAGE_LIMIT;
+
+  let q = query(bookCatalogRef, orderBy("Name"), limit(pageLimit));
+  
+  if(lastName){
+    q = query(bookCatalogRef, orderBy("Name"), startAfter(lastName), limit(pageLimit));
+  }
+
+  let snapshot = await getDocs(q);
   
   let allBooks:Book[] = [];
   snapshot.forEach(book => {
@@ -26,22 +36,30 @@ export const getAllBooks = async () => {
   return allBooks;
 };
 
-export const searchBooks = async (searchText:string) => {
+export const searchBooks = async (searchText:string, lastName:string|null = null) => {
 
+  const pageLimit = DEFAULT_SEARCH_PAGE_LIMIT;
   const searchConstraints: Array<QueryFieldFilterConstraint> = [];
+  const startAfterConstraints: Array<QueryStartAtConstraint> = [];
   
   Object.keys(triGram(searchText)).forEach(key => searchConstraints.push(where(`${key}`, '==', true)));
 
+  if(lastName){
+    startAfterConstraints.push(startAfter(lastName));
+  }
 
   let constraints = [
     // where('Name', '==', searchText),
     // where('Author', '==', searchText),
     ...searchConstraints,
-    limit(10)
+    // orderBy("Name"),
+    // ...startAfterConstraints,
+    limit(pageLimit)
   ];
+
   
+  // const q = query(bookCatalogRef, ...searchConstraints, orderBy("Name"), limit(pageLimit));
   const q = query(bookCatalogRef, ...constraints);
-  
   
   let snapshot = await getDocs(q);
   
