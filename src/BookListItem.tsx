@@ -63,7 +63,7 @@ const BookListItem = ({isLoggedIn,setNewBookAdded,book, idx}:Props) => {
                     onClick={handleDelete}>Delete</a>
                 </Col>}
                 {isLoggedIn && deleting && <Col sm={1} className='border'>
-                    <Spinner animation="border" size="sm" />
+                    <Spinner variant='primary' animation="border" size="sm" />
                 </Col>}
             </Row>
       )}
