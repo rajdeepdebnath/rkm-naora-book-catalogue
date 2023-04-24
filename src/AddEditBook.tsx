@@ -20,7 +20,7 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
     const [error, setError] = useState(false);
     const [name, setName] = useState(bookToUpdate ? bookToUpdate?.Name :'');
     const [author, setAuthor] = useState(bookToUpdate ? bookToUpdate?.Author :'');
-    const [language, setLanguage] = useState(bookToUpdate ? bookToUpdate?.Language :'');
+    const [language, setLanguage] = useState(bookToUpdate ? bookToUpdate?.Language :'Bengali');
     const [price, setPrice] = useState(bookToUpdate ? bookToUpdate?.Price :0);
     const [quantity, setQuantity] = useState(bookToUpdate ? bookToUpdate?.Quantity :0);
     
