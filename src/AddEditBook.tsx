@@ -29,6 +29,14 @@ const AddEditBook = ({setNewBookAdded, bookToUpdate = null}: Props) => {
 
         if(name.trim().length > 0 && author.trim().length > 0) {
             setLoading(true);
+
+            console.log(isNaN(price));
+            
+            if(isNaN(price)){
+                alert("Please enter valid price like 100.00 or 100.50");
+                setLoading(false);
+                return;
+            }
             
             let actionIsSuccess:boolean|null = null;
             if(bookToUpdate === null){
