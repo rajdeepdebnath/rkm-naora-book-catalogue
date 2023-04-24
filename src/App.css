@@ -5,3 +5,13 @@
 .custom-fs-12{
     font-size: 12px;
 }
+
+@media (max-width:600px) {
+    .custom-fs-10{
+        font-size: 10px;
+    }
+
+    .custom-p-0{
+        padding: 0 !important;
+    }
+}

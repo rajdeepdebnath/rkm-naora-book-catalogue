@@ -28,6 +28,10 @@ export const getAllBooks = async (lastName:string|null = null) => {
       id: book.id, 
       Name: bookData.Name,
       Author: bookData.Author,
+      Language: bookData.Language,
+      Price: bookData.Price,
+      TotalPrice: bookData.TotalPrice,
+      Quantity: bookData.Quantity,
       created_date:bookData.created_date.toDate()
     };
     allBooks.push(b);
@@ -70,6 +74,10 @@ export const searchBooks = async (searchText:string, lastName:string|null = null
       id: book.id, 
       Name: bookData.Name,
       Author: bookData.Author,
+      Language: bookData.Language,
+      Price: bookData.Price,
+      TotalPrice: bookData.TotalPrice,
+      Quantity: bookData.Quantity,
       created_date:bookData.created_date.toDate()
     };
     allBooks.push(b);
@@ -92,7 +100,8 @@ export const addBook = async (data:Book) => {
 export const updateBook = async (data:Book) => {
   try {
     const frankDocRef = doc(bookCatalogRef, data.id);
-    await setDoc(frankDocRef, data);
+    await deleteDoc(doc(bookCatalogRef, data.id));
+    await addBook(data);
     return true;
   }catch (error) {
     console.log(error);

@@ -15,7 +15,6 @@ const TopNavbar = ({isLoggedIn, setIsLoggedIn}) => {
   let location = useLocation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  console.log(isLoggedIn);
   
 
   const handleLogout = async (e) => {

@@ -17,12 +17,16 @@ const ExportExcel = ({books}:Props) => {
     const handleDownload = (e:React.SyntheticEvent) => {
         e.preventDefault();
         setLoading(true);
-
-        console.log(books);
         
 
         const worksheet = XLSX.utils
-        .json_to_sheet(books.map((b, idx) => ({ SlNo:idx+1, Name:b.Name, Author:b.Author, created_date:b.created_date })));
+        .json_to_sheet(books.map((b, idx) => ({ SlNo:idx+1, 
+          Name:b.Name, Author:b.Author, 
+          Language: b.Language,
+          Price: b.Price,
+          Quantity: b.Quantity,
+          TotalPrice: b.TotalPrice,
+          created_date:b.created_date })));
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Book-Catalog");
         XLSX.writeFile(workbook, "Book-Catalog.xlsx");

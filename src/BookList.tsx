@@ -28,17 +28,29 @@ const BookList = ({isLoggedIn, fetchedBookCount, handleLoadMore,setNewBookAdded,
 
   return (
     <Container fluid className='py-2'>
-    <Row>
-        <Col xs={1} className='border fw-bold bg-light text-center'>
-            No.
+    <Row className='custom-fs-10'>
+        <Col xs={1} className='border bg-light text-center custom-p-0'>
+            #
         </Col>
-        <Col md={5} xs={6} className='border fw-bold bg-light text-center'>
-            Book Name
+        <Col md={3} xs={3} className='border fw-bold bg-light text-center custom-p-0'>
+            Book
         </Col>
-        <Col xl={5} md={4} xs={5} className='border fw-bold bg-light text-center'>
+        <Col xs={3} className='border fw-bold bg-light text-center custom-p-0'>
             Author
         </Col>
-        {isLoggedIn && <Col xl={1} md={2}
+        <Col md={1} xs={2} className='border fw-bold bg-light text-center custom-p-0'>
+            Language
+        </Col>
+        <Col xs={1} className='border fw-bold bg-light text-center custom-p-0'>
+            Price
+        </Col>
+        <Col xs={1} className='border fw-bold bg-light text-center custom-p-0'>
+            Quantity
+        </Col>
+        <Col xs={1} className='border fw-bold bg-light text-center custom-p-0'>
+            Total
+        </Col>
+        {isLoggedIn && <Col xl={1} md={1}
         className='border fw-bold bg-light text-center d-none d-md-block'>
             Action
         </Col>}

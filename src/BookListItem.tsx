@@ -46,20 +46,32 @@ const BookListItem = ({isLoggedIn,setNewBookAdded,book, idx}:Props) => {
   return (
     <>
       {book && !editing && (
-            <Row key={book.id}>
+            <Row key={book.id} className='custom-fs-10 custom-p-0'>
                 <Col md={1} xs={1} className='border text-center'>
                     {idx + 1}
                 </Col>
-                <Col md={5} xs={6} className='text-break border'>
+                <Col md={3} xs={3} className='custom-p-0 border'>
                     {book.Name}
                 </Col>
-                <Col xl={5} md={4} xs={5} className='text-break border'>
+                <Col md={3} xs={3} className='custom-p-0 border'>
                     {book.Author}
                 </Col>
-                {isLoggedIn && !deleting && <Col xl={1} md={2} className='border text-wrap d-none d-md-block'>
-                    <a className='text-primary custom-fs-14 text-decoration-none' 
+                <Col md={1} xs={2} className='custom-p-0 border'>
+                    {book.Language}
+                </Col>
+                <Col md={1} xs={1} className='custom-p-0 border'>
+                    {book.Price}
+                </Col>
+                <Col md={1} xs={1} className='custom-p-0 border'>
+                    {book.Quantity}
+                </Col>
+                <Col md={1} xs={1} className='custom-p-0 border'>
+                    {book.TotalPrice}
+                </Col>
+                {isLoggedIn && !deleting && <Col xl={1} md={1} className='border text-wrap d-none d-md-block'>
+                    <a className='text-primary custom-fs-12 text-decoration-none' 
                     onClick={handleEdit} role="button">Edit</a>&nbsp;|&nbsp;
-                    <a className='text-primary custom-fs-14 text-decoration-none' 
+                    <a className='text-primary custom-fs-12 text-decoration-none' 
                     onClick={handleDelete} role="button">Delete</a>
                 </Col>}
                 {isLoggedIn && deleting && <Col sm={1} className='border'>
