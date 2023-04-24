@@ -32,7 +32,7 @@ const ExportExcel = ({books}:Props) => {
     }
     
   return (
-    <Container className='my-1 pb-5'>
+    <Container className='my-1 pb-5 d-none d-md-block'>
       <Row>
         <Col sm={12} className='text-center my-3'>
             <Button variant="outline-success" type="button" className='btn-sm' 
