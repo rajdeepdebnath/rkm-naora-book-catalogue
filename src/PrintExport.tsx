@@ -10,9 +10,10 @@ import Print from "./Print";
 
 interface Props {
   books: Book[];
+  isLoggedIn: boolean;
 }
 
-const PrintExport = ({ books }: Props) => {
+const PrintExport = ({ isLoggedIn, books }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = (e: React.SyntheticEvent) => {
@@ -52,7 +53,7 @@ const PrintExport = ({ books }: Props) => {
           </Button>
         </Col>
         <Col md={12} className="text-center mb-3">
-          <Print books={books} />
+          {isLoggedIn && <Print books={books} />}
         </Col>
       </Row>
     </Container>

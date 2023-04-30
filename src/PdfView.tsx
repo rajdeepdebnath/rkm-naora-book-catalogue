@@ -19,22 +19,22 @@ function PdfView({ books }: Props) {
           padding: "3px 0",
         }}
       >
-        <td width="3%">#</td>
+        <td width="1%">#</td>
         <td width="40%">Book</td>
-        <td width="27%">Author</td>
+        <td width="31%">Author</td>
         <td width="10%">Language</td>
         <td width="7%">Price</td>
-        <td width="5%">Quantity</td>
+        <td width="3%">Quantity</td>
         <td width="8%">Total</td>
       </tr>
       {books.map((book, idx) => (
         <tr key={idx} style={{ padding: "3px 0" }}>
-          <td width="3%">{idx + 1}</td>
+          <td width="1%">{idx + 1}</td>
           <td width="40%">{book.Name}</td>
-          <td width="27%">{book.Author}</td>
+          <td width="31%">{book.Author}</td>
           <td width="10%">{book.Language}</td>
           <td width="7%">{book.Price}</td>
-          <td width="5%">{book.Quantity}</td>
+          <td width="3%">{book.Quantity}</td>
           <td width="8%">{book.TotalPrice}</td>
         </tr>
       ))}

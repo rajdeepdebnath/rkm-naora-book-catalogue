@@ -5,7 +5,7 @@ import AddEditBook from "./AddEditBook";
 import BookList from "./BookList";
 import Container from "react-bootstrap/esm/Container";
 import Search from "./Search";
-import ExportExcel from "./PrintExport";
+import PrintExport from "./PrintExport";
 
 function Home({ isLoggedIn }) {
   const [books, setBooks] = useState<Book[]>([]);
@@ -56,7 +56,7 @@ function Home({ isLoggedIn }) {
           books={books}
         />
       )}
-      <ExportExcel books={books} />
+      <PrintExport isLoggedIn={isLoggedIn} books={books} />
     </Container>
   );
 }
