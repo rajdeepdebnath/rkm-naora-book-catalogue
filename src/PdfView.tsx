@@ -10,41 +10,81 @@ interface Props {
 }
 
 function PdfView({ books }: Props) {
+  // const tableColumns = (columnData:[]) => {
+  //     return (
+  //         <>
+  //             {columnData.map(c => {
+  //                 <>
+  //                     <td width="1%">#</td>
+  //                     <td width="40%">Book</td>
+  //                     <td width="31%">Author</td>
+  //                     <td width="10%">Language</td>
+  //                     <td width="7%">Price</td>
+  //                     <td width="3%">Quantity</td>
+  //                     <td width="8%">Total</td>
+  //                 </>
+  //             })}
+  //         </>
+  //     )
+  // }
   return (
-    <table width={"100%"} style={{ fontSize: 12 }}>
+    <table width={"100%"} style={{ fontSize: 12, margin: 5 }}>
+      <tr style={{ width: "100%", paddingTop: 20 }}>
+        <td style={{ width: "100%", textAlign: "center" }}>
+          <img src="/nav.png" alt="RKM Naora" style={{ width: 200 }} />
+        </td>
+      </tr>
+      <tr style={{ width: "100%" }}>
+        <td style={{ width: "100%", textAlign: "center", fontWeight: "bold" }}>
+          Book bill
+        </td>
+      </tr>
+      <tr style={{ width: "100%", textAlign: "right", padding: 10 }}>
+        <td width="90%">&nbsp;</td>
+        <td width="10%" style={{ fontWeight: "bold", fontSize: 10 }}>
+          Date: {new Date().toDateString()}
+        </td>
+      </tr>
       <tr
         style={{
           border: "1px solid #939292",
           backgroundColor: "#d3d3d3",
-          padding: "3px 0",
+          padding: "3px",
         }}
       >
-        <td width="1%">#</td>
+        <td width="auto">#</td>
         <td width="40%">Book</td>
         <td width="31%">Author</td>
         <td width="10%">Language</td>
         <td width="7%">Price</td>
-        <td width="3%">Quantity</td>
+        <td width="auto">Quantity</td>
         <td width="8%">Total</td>
       </tr>
       {books.map((book, idx) => (
-        <tr key={idx} style={{ padding: "3px 0" }}>
-          <td width="1%">{idx + 1}</td>
+        <tr key={idx} style={{ padding: "3px" }}>
+          <td width="auto">{idx + 1}</td>
           <td width="40%">{book.Name}</td>
           <td width="31%">{book.Author}</td>
           <td width="10%">{book.Language}</td>
           <td width="7%">{book.Price}</td>
-          <td width="3%">{book.Quantity}</td>
+          <td width="auto">{book.Quantity}</td>
           <td width="8%">{book.TotalPrice}</td>
         </tr>
       ))}
       <hr />
-      <tr>
-        <td width="90%">&nbsp;</td>
-        <td width="10%" style={{ fontWeight: "bold" }}>
+      <tr style={{ width: "100%" }}>
+        <td
+          style={{
+            width: "8%",
+            fontWeight: "bold",
+            textAlign: "right",
+            paddingRight: 70,
+          }}
+        >
           Total:{books.reduce((a, b) => a + b.TotalPrice, 0).toFixed(2)}
         </td>
       </tr>
+      <hr />
     </table>
   );
 }
