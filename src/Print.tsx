@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { Book } from "./types/book";
 import Html from "react-pdf-html";
@@ -19,6 +19,8 @@ const Print = ({ books }: Props) => {
   const handlePrint = () => {
     if (!isPrintReady) setIsPrintReady(true);
   };
+
+  useEffect(() => setIsPrintReady(false), [books]);
 
   return (
     <Container className="my-1 pb-5 d-none d-md-block">
